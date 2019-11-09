@@ -1,0 +1,159 @@
+<!-- Cette page permet la mise en place du bloc permettant la saisie des informations 
+     d'un nouveau contact ou leur modification -->
+
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+
+    <input type="hidden" name="id" [value]="service.formData.id"> <!--Id masqué -->
+
+    <!-- FIRSTNAME -->
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-user" [class.green-icon]="firstName.valid" [class.red-icon]="firstName.invalid && firstName.touched"></i>
+          </div>
+        </div>
+        <input name="firstName" #firstName="ngModel" [(ngModel)]="service.formData.firstName" class="form-control"placeholder="Prénom" required>
+      </div>
+    </div>
+
+    <!-- LASTNAME -->
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-user-tie"  [class.green-icon]="lastName.valid" [class.red-icon]="lastName.invalid && lastName.touched"></i>
+          </div>
+        </div>
+        <input name="lastName" #lastName="ngModel" [(ngModel)]="service.formData.lastName" class="form-control" placeholder="Nom" required>
+      </div>
+    </div>
+
+
+    <!------ Bloc Address 1 ------>
+    <div class="form-row">
+    <!-- Address 1 -->
+    <div class="form-group col-md-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-map-marked-alt"  [class.green-icon]="address1.valid" [class.red-icon]="address1.invalid && address1.touched"></i>
+          </div>
+        </div>
+        <input name="address1" #address1="ngModel" [(ngModel)]="service.formData.address1" class="form-control" placeholder="Adresse" required>
+        </div>
+    </div>
+    <!-- Code Postal 1 -->
+    <div class="form-group col-md-12">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-map-marker-alt"  [class.green-icon]="cityPostalCode1.valid" [class.red-icon]="cityPostalCode1.invalid && cityPostalCode1.touched"></i>
+          </div>
+        </div>
+        <input name="cityPostalCode1" #cityPostalCode1="ngModel" [(ngModel)]="service.formData.cityPostalCode1" class="form-control" placeholder="Code Postal"required maxlength="5" minlength="5">
+        <button class="btn btn-success" (click)="setCity1Name(service.formData.cityPostalCode1)" *ngIf="showB1">
+          <i class="fas fa-check"></i>
+        </button>
+        <!-- City 1 -->
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-city"[class.green-icon]="city1.valid" [class.red-icon]="city1.invalid && city1.touched"></i>
+          </div>
+        </div>
+        <input name="city1" #city1="ngModel" [(ngModel)]="service.formData.city1" class="form-control" placeholder="Ville"required>
+        <button class="btn btn-primary" (click)="showAddress2()" *ngIf="showB1">
+          <i class="fa fa-plus"></i> 
+        </button>
+       </div>
+      </div>
+    </div>
+
+
+    <!------ Bloc Address 2 ------>
+    <div class="form-row" *ngIf="showA2 ||  cd?.address2 != null">
+      <!-- Address 2 -->
+      <div class="form-group col-md-12">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-map-marked-alt"  [class.green-icon]="address2.valid" [class.red-icon]="address2.invalid && address2.touched"></i>
+            </div>
+          </div>
+          <input name="address2" #address2="ngModel" [(ngModel)]="service.formData.address2" class="form-control" placeholder="Adresse" required>
+          </div>
+      </div>
+      <!-- Code Postal 2 -->
+      <div class="form-group col-md-12">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-map-marker-alt"  [class.green-icon]="cityPostalCode2.valid" [class.red-icon]="cityPostalCode2.invalid && cityPostalCode2.touched"></i>
+            </div>
+          </div>
+          <input name="cityPostalCode2" #cityPostalCode2="ngModel" [(ngModel)]="service.formData.cityPostalCode2" class="form-control" placeholder="Code Postal"required maxlength="5">
+          <button class="btn btn-success" (click)="setCity2Name(service.formData.cityPostalCode2)" *ngIf="showB2">
+            <i class="fas fa-check"></i>
+          </button>
+          <!-- City 2 -->
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-city"[class.green-icon]="city2.valid" [class.red-icon]="city2.invalid && city2.touched"></i>
+            </div>
+          </div>
+          <input name="city2" #city2="ngModel" [(ngModel)]="service.formData.city2" class="form-control" placeholder="Ville"required>
+          <button class="btn btn-primary" (click)="showAddress3()" *ngIf="showB2">
+            <i class="fa fa-plus"></i> 
+          </button>
+         </div>
+        </div>
+      </div>
+
+
+      <!------ Bloc Address 3 ------>
+    <div class="form-row" *ngIf="showA3">
+      <!-- Address 3 -->
+      <div class="form-group col-md-12">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-map-marked-alt"  [class.green-icon]="address3.valid" [class.red-icon]="address3.invalid && address3.touched"></i>
+            </div>
+          </div>
+          <input name="address3" #address3="ngModel" [(ngModel)]="service.formData.address3" class="form-control" placeholder="Adresse" required>
+          </div>
+      </div>
+      <!-- Code Postal 3 -->
+      <div class="form-group col-md-12">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-map-marker-alt"  [class.green-icon]="cityPostalCode3.valid" [class.red-icon]="cityPostalCode3.invalid && cityPostalCode3.touched"></i>
+            </div>
+          </div>
+          <input name="cityPostalCode3" #cityPostalCode3="ngModel" [(ngModel)]="service.formData.cityPostalCode3" class="form-control" placeholder="Code Postal"required maxlength="5" >
+          <button class="btn btn-success" (click)="setCity3Name(service.formData.cityPostalCode3)" >
+            <i class="fas fa-check"></i>
+          </button>
+          <!-- City 3 -->
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-city"[class.green-icon]="city3.valid" [class.red-icon]="city3.invalid && city3.touched"></i>
+            </div>
+          </div>
+          <input name="city3" #city3="ngModel" [(ngModel)]="service.formData.city3" class="form-control" placeholder="Ville"required>
+         </div>
+        </div>
+      </div>
+
+   
+
+
+    <!-- BOUTON ENREGISTRER -->
+    <div class="form-group">
+      <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid">
+        <i class="fas fa-file-export"></i> ENREGISTRER
+      </button>
+    </div>
+    
+  </form>

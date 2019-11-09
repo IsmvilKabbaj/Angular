@@ -1,0 +1,20 @@
+<!--Cette page permet la mise en forme et la visualisation des contacts enregistrés  -->
+
+<table class="table table-hover table-sm table-dark" *ngFor="let cd of service.list" > <!-- cd = ContactDetail -->
+    <tr>
+        <b><td (click)="populateForm(cd)" width="400">{{cd.firstName}} {{cd.lastName}}</td></b> <!-- Nom et prénom  -->
+        <td><i class="far fa-trash-alt fa-lg text-danger" (click)="onDelete(cd.id)"></i> </td> <!-- Bouton de suppression, appel la foncton onDelete-->
+    </tr>
+    <tr>
+        <td (click)="populateForm(cd)">{{cd.address1}} , {{cd.cityPostalCode1}} , {{cd.city1}} </td> <!-- Adresse 1  -->
+    </tr>
+    <tr *ngIf=dynamicDisplay(cd.address2)> <!-- Affichage dynamique -->
+        <td (click)="populateForm(cd)">{{cd.address2}} , {{cd.cityPostalCode2}} , {{cd.city2}} </td> <!-- Adresse 2  -->
+        <td><i class="fas fa-backspace text-warning" (click)="(cd.address2='null')"(click)="(cd.cityPostalCode2='null')" (click)="(cd.city2='null')"(click)="populateForm(cd)" (click)="onSubmit()" ></i> </td> <!-- Bouton de suppression-->
+    </tr>
+    <tr *ngIf=dynamicDisplay(cd.address3)><!-- Affichage dynamique -->
+        <td (click)="populateForm(cd)">{{cd.address3}} , {{cd.cityPostalCode3}} , {{cd.city3}} </td> <!-- Adresse 3  -->
+        <td><i class="fas fa-backspace text-warning" (click)="(cd.address3='null')"(click)="(cd.cityPostalCode3='null')" (click)="(cd.city3='null')"(click)="populateForm(cd)"(click)="onSubmit()"></i> </td> <!-- Bouton de suppression-->
+    </tr>
+</table>
+
